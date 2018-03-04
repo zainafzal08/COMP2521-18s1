@@ -7,6 +7,8 @@
 Who am i?
 
 1. introduce yourself to the other people in the tute class
+	- either 2 truths and a lie
+	- on thing you are proud of yourself for
 2. discuss what you learned from COMP1511
 3. discuss what parts you're still unsure of
 4. choose lab partners (who you'll work with until week 6)
