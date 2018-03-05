@@ -19,6 +19,7 @@ int main(int argc, char* argv[]) {
   head->next->value = 2;
   head->next->next = malloc(sizeof(struct _Node));
   head->next->next->value = 3;
+	head->next->next->next = NULL;
 
   int result = sum(head);
   int resultRec = sumRec(head);

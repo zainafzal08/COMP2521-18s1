@@ -20,11 +20,22 @@ int main(int argc, char* argv[]) {
   if (isSorted(test2,5))
     printf("[1,2,3,4,5] is sorted\n");
   else
-    printf("[1,2,3,4,5] is not sorted\n");
+    printf("[1,2,3,5,4] is not sorted\n");
 
   return EXIT_SUCCESS;
 }
 
+// Pre:
+// - a[] is a valid pointer to the start of an array of ints
+// - n is a positive int indicating how many elements in a[]
+// Post:
+// - return value = ∀ i ∈ {0..n-2} ( a[i] ≤ a[i+1] )
 int isSorted(int* a, int size) {
-  return FALSE;
+  int i = 0;
+  for(i = 0; i < size-1; i++) {
+    if(a[i] > a[i+1]) {
+      return FALSE;
+    }
+  }
+  return TRUE;
 }
