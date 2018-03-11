@@ -52,7 +52,7 @@ Decision time
 
 > Write BagNumUniq
 
-REPL????
+https://repl.it/classroom/invite/OIIsE2A
 
 > If we have three 8-bit unsigned char variables, x, y and z with the following initial values:
 
