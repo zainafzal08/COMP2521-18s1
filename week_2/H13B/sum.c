@@ -29,9 +29,17 @@ int main(int argc, char* argv[]) {
 }
 
 int sum(List head) {
-  return 0;
+	int acc = 0;
+
+	for(Node * n = head; n != NULL; n = n->next) {
+		acc += n->value;
+	}
+	return acc;
 }
 
 int sumRec(List head){
-  return 0;
+  if(head == NULL) {
+		return 0;
+	}
+	return head->value + sumRec(head->next);
 }
