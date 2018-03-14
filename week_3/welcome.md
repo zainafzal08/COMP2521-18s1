@@ -22,7 +22,7 @@ Decision time
 
 #### Bag ADT
 
-> an unsorted array of pre-defined size MAX_BAG
+> an unsorted array of pre-definedlord size MAX_BAG
 
 - sizing
 - duplicate values
@@ -84,6 +84,12 @@ RWE RWE RWE
 
 - a regular file that is only readable and writeable to its owner
 - a regular file that is only executable to owner/group/anyone
+
+> Lab Code
+
+1. Go through what the lab is about
+2. Testing with stdin and stdout
+3. myed
 
 > Write showBits
 

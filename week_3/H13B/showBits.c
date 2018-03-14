@@ -1,0 +1,3 @@
+void showBits(Word w) {
+  
+}
