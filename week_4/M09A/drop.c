@@ -36,5 +36,17 @@ int main(int argc, char* argv[]) {
 
 
 void drop(List L) {
+  if (L == NULL) {
+    return;
+  }
+  List tmp = L->next;
+  free(L);
+  return drop(tmp);
+}
 
+
+void magic(List L) {
+  magic(L->next);
+  print("%d\n",L->value);
+  return;
 }

@@ -75,7 +75,8 @@ int add(int a, int b) {
 }
 
 int findLength(List L) {
-  return 0;
+  map(L, one);
+  return fold(L,add,0);;
 }
 
 int main(int argc, char* argv[]) {
