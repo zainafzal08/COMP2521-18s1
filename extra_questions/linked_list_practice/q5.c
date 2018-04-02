@@ -1,28 +1,32 @@
 /*
- * Question 1
+ * Question 5
  * ===============================================
- * Below is a simple linked list implementation
- * finish the "swap" function which takes in a
- * list L, a index i and a index j. It swaps the
- * nodes at index i and j in list L.
+ * I have this awesome double linked list which
+ * i used to store my favourite carley ray jepson
+ * songs but i've accidently put in the data in the
+ * wrong order! can you reverse the list for me?
+ * ===============================================
+ * finish the reverseList function that via pointer
+ * manipulations (i.e without creating a new list)
+ * reverses the list
  *
- * 1->2->3->4 with i = 1 j = 3 becomes
- * 1->4->3->2
- * ================================================
- * > You can assume i and j will always be valid
- * > the list will have at minimum 2 nodes.
- * > you can assume i != j
- * > do not swap the _values_ in the nodes, swap the
- *   nodes themselves.
+ * NULL<-1<->2<->3<->4<->5->NULL
+ * becomes
+ * NULL<-5<->4<->3<->2<->1->NULL
+ * ===============================================
+ * > you won't be given an empty List
  */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#define BUFF_SIZE 256
 
 // Node
 typedef struct _node {
-  int value;
+  char* song;
   struct _node *next;
+  struct _node *prev;
 } node;
 typedef node *Node;
 
@@ -36,25 +40,22 @@ typedef list *List;
 // prototypes
 List newList();
 void freeNode(Node n);
-Node makeNode(int num);
+Node makeNode(char* word);
 void addNode(List L, Node n);
 void showList(List L);
-void swap(List L);
+void reverseList(List L);
 
 // main function
 int main(int argc, char* argv[]) {
-  int num;
-  int i;
-  int j;
+  char str[BUFF_SIZE];
   int readIn;
   List L = newList();
-  scanf("%d %d",&i, &j);
-  readIn = scanf("%d",&num);
+  readIn = scanf("%s",str);
   while(readIn > 0) {
-    addNode(L,makeNode(num));
-    readIn = scanf("%d",&num);
+    addNode(L,makeNode(str));
+    readIn = scanf("%s",str);
   }
-  swap(L,i,j);
+  reverseList(L);
   showList(L);
   // i'm a good boy and free my memory
   Node curr = L->head;
@@ -68,6 +69,7 @@ int main(int argc, char* argv[]) {
 }
 
 void freeNode(Node n) {
+  free(n->song);
   free(n);
 }
 
@@ -78,10 +80,11 @@ List newList(){
   return L;
 }
 
-Node makeNode(int num){
+Node makeNode(char* word){
   Node new = malloc(sizeof(node));
-  new->value = num;
+  new->song = strdup(word);
   new->next = NULL;
+  new->prev = NULL;
   return new;
 }
 
@@ -91,20 +94,23 @@ void addNode(List L, Node n){
     L->tail = n;
   }else{
     L->tail->next = n;
+    n->prev = L->tail;
     L->tail = n;
   }
 }
 
 void showList(List L){
+  printf("FORWARD: ");
   Node curr = L->head;
-  if (L->head != NULL)
-    printf("(H:%d|T:%d) ",L->head->value,L->tail->value);
-  else
-    printf("(H:%d|T:%d) ","NULL","NULL");
-
   while(curr != NULL){
-    printf("[%d]->",curr->value);
+    printf("[%s]->",curr->song);
     curr = curr->next;
+  }
+  printf("NULL || BACKWARD: ");
+  curr = L->tail;
+  while(curr != NULL){
+    printf("[%s]->",curr->song);
+    curr = curr->prev;
   }
   printf("NULL");
 }
@@ -112,6 +118,6 @@ void showList(List L){
 // =============================
 // TODO: Complete this function
 // =============================
-void swap(List L, int i, int j) {
+void reverseList(List L) {
 
 }

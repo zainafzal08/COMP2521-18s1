@@ -1,27 +1,35 @@
 /*
- * Question 1
+ * Question 4
  * ===============================================
- * Below is a simple linked list implementation
- * finish the "swap" function which takes in a
- * list L, a index i and a index j. It swaps the
- * nodes at index i and j in list L.
- *
- * 1->2->3->4 with i = 1 j = 3 becomes
- * 1->4->3->2
+ * Ah nuts, someone trolled me and filled my
+ * linked list of my favourite words up with the
+ * word "DICKS", could you go through the list and
+ * delete any node that contains the word "DICKS"?
  * ================================================
- * > You can assume i and j will always be valid
- * > the list will have at minimum 2 nodes.
- * > you can assume i != j
- * > do not swap the _values_ in the nodes, swap the
- *   nodes themselves.
+ * Fill in the function "removeDicks()" which takes
+ * in a list and delete all nodes containing the
+ * word DICKS
+ *
+ * [hello]->[world]->[DICKS]->NULL
+ * becomes
+ * [hello]->[world]->NULL
+ * ================================================
+ * > you may be given an empty List
+ * > You won't be given a NULL list struct
+ * > only delete strings that are exactly "DICKS"
+ * > you are allowed to use string.h functions
+ *   like strcmp
+ * > yes i think this is hilarious, i'm a simple man
  */
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#define BUFF_SIZE 256
 
 // Node
 typedef struct _node {
-  int value;
+  char* word;
   struct _node *next;
 } node;
 typedef node *Node;
@@ -36,25 +44,22 @@ typedef list *List;
 // prototypes
 List newList();
 void freeNode(Node n);
-Node makeNode(int num);
+Node makeNode(char* word);
 void addNode(List L, Node n);
 void showList(List L);
-void swap(List L);
+void removeDicks(List L);
 
 // main function
 int main(int argc, char* argv[]) {
-  int num;
-  int i;
-  int j;
+  char str[BUFF_SIZE];
   int readIn;
   List L = newList();
-  scanf("%d %d",&i, &j);
-  readIn = scanf("%d",&num);
+  readIn = scanf("%s",str);
   while(readIn > 0) {
-    addNode(L,makeNode(num));
-    readIn = scanf("%d",&num);
+    addNode(L,makeNode(str));
+    readIn = scanf("%s",str);
   }
-  swap(L,i,j);
+  removeDicks(L);
   showList(L);
   // i'm a good boy and free my memory
   Node curr = L->head;
@@ -68,6 +73,7 @@ int main(int argc, char* argv[]) {
 }
 
 void freeNode(Node n) {
+  free(n->word);
   free(n);
 }
 
@@ -78,9 +84,9 @@ List newList(){
   return L;
 }
 
-Node makeNode(int num){
+Node makeNode(char* word){
   Node new = malloc(sizeof(node));
-  new->value = num;
+  new->word = strdup(word);
   new->next = NULL;
   return new;
 }
@@ -98,12 +104,12 @@ void addNode(List L, Node n){
 void showList(List L){
   Node curr = L->head;
   if (L->head != NULL)
-    printf("(H:%d|T:%d) ",L->head->value,L->tail->value);
+    printf("(H:%s|T:%s) ",L->head->word,L->tail->word);
   else
-    printf("(H:%d|T:%d) ","NULL","NULL");
+    printf("(H:%s|T:%s) ","NULL","NULL");
 
   while(curr != NULL){
-    printf("[%d]->",curr->value);
+    printf("[%s]->",curr->word);
     curr = curr->next;
   }
   printf("NULL");
@@ -112,6 +118,6 @@ void showList(List L){
 // =============================
 // TODO: Complete this function
 // =============================
-void swap(List L, int i, int j) {
+void removeDicks(List L) {
 
 }
