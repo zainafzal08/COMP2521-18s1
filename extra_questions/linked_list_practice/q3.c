@@ -1,41 +1,28 @@
 /*
  * Question 3
  * ===============================================
- * Oh no! You went to visit your doctor friend at
- * the hospital and see the emergency room in
- * panic, the software that was keeping track of
- * the patients and how urgently they needed care
- * has broken! Help a brother out by fixing the
- * corrupted function outlined below
- * ===============================================
- * The function getNextPatient() takes in a
- * linked list of patients and returns the name
- * of the person with the highest priority score.
+ * Write a function that inserts a new node with
+ * value v at position i in a linked List, where
+ * potision i is defined to be the location before
+ * the ith node.
+ *
+ * calling insertAtI(L,100,1) with
+ * L = [1]->[2]->[3]->NULL
+ * modified L to be
+ * L = [1]->[100]->[2]->[3]->NULL
+ *
+ * as the 1st node is [2] ([1] is the 0th)
  * ================================================
- * > You can assume there is at least 1 patient
- * > You can assume there won't be a tie for
- *   highest priority i.e 2 people with priority
- *   10 which is the highest
- * > priority will always be a postive integer >=0
- * > Names won't repeat
- * > Don't modify the list
+ * > You can assume you will never get a empty list.
+ * > You can assume i is always valid (not out of bounds)
  */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#define BUFF_SIZE 256
-
-// Patient
-typedef struct _patient {
-  char* name;
-  int priority;
-} patient;
-typedef patient *Patient;
 
 // Node
 typedef struct _node {
-  Patient p;
+  int value;
   struct _node *next;
 } node;
 typedef node *Node;
@@ -48,25 +35,28 @@ typedef struct _list {
 typedef list *List;
 
 // prototypes
-char* getNextPatient(List L);
-void addPatient(List L, Patient p);
-Patient makePatient(char* name, int pri);
 List newList();
 void freeNode(Node n);
+Node makeNode(int num);
+void addNode(List L, Node n);
+void showList(List L);
+void insertAtI(List L, int b, int i);
 
 // main function
 int main(int argc, char* argv[]) {
-  char str[BUFF_SIZE];
-  int pri;
+  int i;
+  int v;
+  int num;
   int readIn;
   List L = newList();
-  readIn = scanf("%s %d",str,&pri);
+  readIn = scanf("%d %d",&v,&i);
+  readIn = scanf("%d",&num);
   while(readIn > 0) {
-    Patient p = makePatient(str,pri);
-    addPatient(L,p);
-    readIn = scanf("%s %d",str,&pri);
+    addNode(L,makeNode(num));
+    readIn = scanf("%d",&num);
   }
-  printf("%s\n",getNextPatient(L));
+  insertAtI(L,v,i);
+  showList(L);
   // i'm a good boy and free my memory
   Node curr = L->head;
   while(curr != NULL){
@@ -79,10 +69,9 @@ int main(int argc, char* argv[]) {
 }
 
 void freeNode(Node n) {
-  free(n->p->name);
-  free(n->p);
   free(n);
 }
+
 List newList(){
   List L = malloc(sizeof(list));
   L->head = NULL;
@@ -90,29 +79,41 @@ List newList(){
   return L;
 }
 
-Patient makePatient(char* name, int pri){
-  Patient p = malloc(sizeof(patient));
-  p->name = strdup(name);
-  p->priority = pri;
-  return p;
+Node makeNode(int num){
+  Node new = malloc(sizeof(node));
+  new->value = num;
+  new->next = NULL;
+  return new;
 }
 
-void addPatient(List L, Patient p){
-  Node new = malloc(sizeof(node));
-  new->next = NULL;
-  new->p = p;
+void addNode(List L, Node n){
   if (L->head == NULL) {
-    L->head = new;
-    L->tail = new;
+    L->head = n;
+    L->tail = n;
   }else{
-    L->tail->next = new;
-    L->tail = new;
+    L->tail->next = n;
+    L->tail = n;
   }
+}
+
+void showList(List L){
+  Node curr = L->head;
+  // print out the head and tail
+  if (L->head != NULL)
+    printf("(H:%d|T:%d) ",L->head->value,L->tail->value);
+  else
+    printf("(H:NULL|T:NULL) ");
+  // print out the rest of the list
+  while(curr != NULL){
+    printf("[%d]->",curr->value);
+    curr = curr->next;
+  }
+  printf("NULL");
 }
 
 // =============================
 // TODO: Complete this function
 // =============================
-char* getNextPatient(List L) {
-  return "I DUNNO";
+void insertAtI(List L, int v, int i) {
+
 }

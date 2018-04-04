@@ -14,9 +14,9 @@
 |                                               |
 | Tests 1,2,3 are more geared to be similar to  |
 | the ones you may get tested on. 4,5,6 are     |
-| extension questions with more jokes and       |
-| complex data structures if you want more of   |
-| a challenge in wrapping ur head around code   |
+| extension questions with more complex data    |
+| structures if you want more of a challenge in |
+| wrapping ur head around code                  |
 |                                               |
 | The tests provided are by no means exhaustive |
 | and you should talk to other students / write |
@@ -26,15 +26,7 @@
 | failed on. Hit me up if you are confused/want |
 | to fight me cause the tests are wrong         |
 |                                               |
+| NOTE: the tests sometimes supress seg faults  |
+| so just do './run' if your getting no output  |
+| and it may because you are seg faulting       |
 |===============================================|
-
-
-zain todo
-
-1. write 1
-2. write 2
-3. write 3
-4. more tests for 5
-5. tests for 1
-6. tests for 2
-7. tests for 3

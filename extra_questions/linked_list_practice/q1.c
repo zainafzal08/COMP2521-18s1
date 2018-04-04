@@ -3,15 +3,15 @@
  * ===============================================
  * Below is a simple linked list implementation
  * finish the "swap" function which takes in a
- * list L, a index i and a index j. It swaps the
- * nodes at index i and j in list L.
+ * list L and a index i and swaps the node at i
+ * with the node at index i+1
  *
- * 1->2->3->4 with i = 1 j = 3 becomes
- * 1->4->3->2
+ * 1->2->3->4 with i = 1
+ * 1->3->2->4
  * ================================================
- * > You can assume i and j will always be valid
- * > the list will have at minimum 2 nodes.
- * > you can assume i != j
+ * > You can assume i will always be valid
+ * > the list will have at minimum 1 node
+ * > if i is the last node do nothing
  * > do not swap the _values_ in the nodes, swap the
  *   nodes themselves.
  */
@@ -39,22 +39,21 @@ void freeNode(Node n);
 Node makeNode(int num);
 void addNode(List L, Node n);
 void showList(List L);
-void swap(List L);
+void swap(List L, int i);
 
 // main function
 int main(int argc, char* argv[]) {
   int num;
   int i;
-  int j;
   int readIn;
   List L = newList();
-  scanf("%d %d",&i, &j);
+  scanf("%d",&i);
   readIn = scanf("%d",&num);
   while(readIn > 0) {
     addNode(L,makeNode(num));
     readIn = scanf("%d",&num);
   }
-  swap(L,i,j);
+  swap(L,i);
   showList(L);
   // i'm a good boy and free my memory
   Node curr = L->head;
@@ -100,7 +99,7 @@ void showList(List L){
   if (L->head != NULL)
     printf("(H:%d|T:%d) ",L->head->value,L->tail->value);
   else
-    printf("(H:%d|T:%d) ","NULL","NULL");
+    printf("(H:NULL|T:NULL) ");
 
   while(curr != NULL){
     printf("[%d]->",curr->value);
@@ -112,6 +111,6 @@ void showList(List L){
 // =============================
 // TODO: Complete this function
 // =============================
-void swap(List L, int i, int j) {
+void swap(List L, int i) {
 
 }

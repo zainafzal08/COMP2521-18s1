@@ -13,6 +13,7 @@
  * NULL<-1<->2<->3<->4<->5->NULL
  * becomes
  * NULL<-5<->4<->3<->2<->1->NULL
+ *
  * ===============================================
  * > you won't be given an empty List
  */
@@ -106,7 +107,7 @@ void showList(List L){
     printf("[%s]->",curr->song);
     curr = curr->next;
   }
-  printf("NULL || BACKWARD: ");
+  printf("NULL\nBACKWARD: ");
   curr = L->tail;
   while(curr != NULL){
     printf("[%s]->",curr->song);

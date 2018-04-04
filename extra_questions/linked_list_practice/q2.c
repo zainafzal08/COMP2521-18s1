@@ -1,35 +1,28 @@
 /*
- * Question 4
+ * Question 2
  * ===============================================
- * oh dear, someone trolled me and filled my
- * linked list of my favourite words up with the
- * word "MEMES", could you go through the list and
- * delete any node that contains the word "MEMES"?
- * ================================================
- * Fill in the function "removeMemes()" which takes
- * in a list and delete all nodes containing the
- * word MEMES
+ * Write a function that takes in a list and builds
+ * a new list of only the even nodes, then returns
+ * that list. The new list should take the nodes
+ * out of the original list, not copy them.
  *
- * [hello]->[world]->[MEMES]->NULL
+ * [1]->[2]->[3]->[4]->NULL
  * becomes
- * [hello]->[world]->NULL
+ * [1]->[3]->NULL and the function returns
+ * [2]->[4]->NULL
+ *
+ * You do not need to make new nodes but you will
+ * need to make a new list struct to return
  * ================================================
- * > you may be given an empty List
- * > You won't be given a NULL list struct
- * > only delete strings that are exactly "MEMES"
- * > you are allowed to use string.h functions
- *   like strcmp
- * > yes i think this is hilarious, i'm a simple man
+ * > input list can be empty
  */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#define BUFF_SIZE 256
 
 // Node
 typedef struct _node {
-  char* word;
+  int value;
   struct _node *next;
 } node;
 typedef node *Node;
@@ -44,23 +37,24 @@ typedef list *List;
 // prototypes
 List newList();
 void freeNode(Node n);
-Node makeNode(char* word);
+Node makeNode(int num);
 void addNode(List L, Node n);
 void showList(List L);
-void removeMemes(List L);
+List getEven(List L);
 
 // main function
 int main(int argc, char* argv[]) {
-  char str[BUFF_SIZE];
+  int num;
   int readIn;
   List L = newList();
-  readIn = scanf("%s",str);
+  readIn = scanf("%d",&num);
   while(readIn > 0) {
-    addNode(L,makeNode(str));
-    readIn = scanf("%s",str);
+    addNode(L,makeNode(num));
+    readIn = scanf("%d",&num);
   }
-  removeMemes(L);
-  showList(L);
+  List eL = getEven(L);
+  showList(L);printf(" || ");showList(eL);
+
   // i'm a good boy and free my memory
   Node curr = L->head;
   while(curr != NULL){
@@ -73,7 +67,6 @@ int main(int argc, char* argv[]) {
 }
 
 void freeNode(Node n) {
-  free(n->word);
   free(n);
 }
 
@@ -84,9 +77,9 @@ List newList(){
   return L;
 }
 
-Node makeNode(char* word){
+Node makeNode(int num){
   Node new = malloc(sizeof(node));
-  new->word = strdup(word);
+  new->value = num;
   new->next = NULL;
   return new;
 }
@@ -104,12 +97,12 @@ void addNode(List L, Node n){
 void showList(List L){
   Node curr = L->head;
   if (L->head != NULL)
-    printf("(H:%s|T:%s) ",L->head->word,L->tail->word);
+    printf("(H:%d|T:%d) ",L->head->value,L->tail->value);
   else
-    printf("(H:%s|T:%s) ","NULL","NULL");
+    printf("(H:NULL|T:NULL) ");
 
   while(curr != NULL){
-    printf("[%s]->",curr->word);
+    printf("[%d]->",curr->value);
     curr = curr->next;
   }
   printf("NULL");
@@ -118,6 +111,6 @@ void showList(List L){
 // =============================
 // TODO: Complete this function
 // =============================
-void removeMemes(List L) {
-
+List getEven(List L) {
+  return NULL;
 }

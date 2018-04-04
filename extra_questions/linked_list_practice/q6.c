@@ -1,16 +1,12 @@
 /*
  * Question 6
  * ===============================================
- * Oh no! You went to visit your doctor friend at
- * the hospital and see the emergency room in
- * panic, the software that was keeping track of
- * the patients and how urgently they needed care
- * has broken! Help a brother out by fixing the
- * corrupted function outlined below
- * ===============================================
- * The function getNextPatient() takes in a
- * linked list of patients and returns the name
- * of the person with the highest priority score.
+ * Below is a linked list of patients at a
+ * hospital and their priority in the queue to
+ * see a doctor. Fill in the function getNextPatient()
+ * which takes in a linked list of patients and
+ * returns the name of the person with the highest
+ * priority score.
  *
  * [joe 5]->[janice 10]->NULL
  * returns
@@ -118,5 +114,5 @@ void addPatient(List L, Patient p){
 // TODO: Complete this function
 // =============================
 char* getNextPatient(List L) {
-  return "I DUNNO";
+  return "I DUNNO!";
 }
