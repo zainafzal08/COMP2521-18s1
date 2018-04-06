@@ -24,4 +24,6 @@ void swap(List L, int i) {
   // make the i-1th node point to the i+1th node
   if(prev != NULL) prev->next = next;
   else L->head = next;
+  // update tail
+  if(nextNext == NULL) L->tail = curr;
 }
