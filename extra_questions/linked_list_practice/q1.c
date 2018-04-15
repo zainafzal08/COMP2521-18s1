@@ -112,7 +112,35 @@ void showList(List L){
 // TODO: Complete this function
 // =============================
 void swap(List L, int i) {
-
-
+  Node prev = NULL;
+  Node curr = L->head;
+  int index = 0;
+  while(curr != NULL) {
+    if (index == i) {
+      break;
+    }
+    prev = curr;
+    curr = curr->next;
+    index++;
+  }
+  // curr and prev are correct
+  if(prev == NULL) {
+    Node tmp = curr->next->next;
+    L->head = curr->next;
+    curr->next->next = curr;
+    curr->next = tmp;
+  } else if (curr->next == NULL) {
+    return;
+  } else if (curr->next->next == NULL) {
+    Node tmp = curr->next->next;
+    prev->next = curr->next;
+    curr->next->next = curr;
+    curr->next = tmp;
+    L->tail = curr;
+  } else {
+    Node tmp = curr->next->next;
+    prev->next = curr->next;
+    curr->next->next = curr;
+    curr->next = tmp;
+  }
 }
-

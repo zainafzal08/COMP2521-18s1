@@ -120,5 +120,14 @@ void showList(List L){
 // TODO: Complete this function
 // =============================
 void reverseList(List L) {
-
+  Node curr = L->head;
+  while(curr != NULL) {
+    Node tmp = curr->next;
+    curr->next = curr->prev;
+    curr->prev = tmp;
+    curr = tmp;
+  }
+  Node tmp = L->head;
+  L->head = L->tail;
+  L->tail = tmp;
 }
