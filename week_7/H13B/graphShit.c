@@ -3,13 +3,28 @@
 struct graphRep {
     int nV;       // #vertices
     int nE;       // #edges
-    List *edges;  // array of Vertex lists
+    int **matrix;  // array of Vertex lists
 };
 
 
 // (e.v < e.w)
 Edge *edges(Graph g, int *nE) {
-
+  int i = 0;
+  int j = 0;
+  int coun t= 0;
+  while(i<g->nv) {
+    j=0;
+    while(j<g->nv) {
+      if(g->matrix[i][j]) {
+        count++;
+        // add to result array
+      }
+      j++;
+    }
+    i++;
+  }
+  *nE = count;
+  return result;
 }
 
 
@@ -29,5 +44,13 @@ int indexOf(Graph g, Vertex v, Vertex w)
 {
     assert(v != w); // no self-edges
     if (v > w) { Vertex tmp = v; v = w; v = tmp; }
-
+    int i = 0;
+    int j = 0;
+    int k = 1;
+    while(i < v) {
+      j += (g->nv-k);
+      i++;
+      k++;
+    }
+    return j+w;
 }
