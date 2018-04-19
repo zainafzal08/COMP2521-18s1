@@ -3,28 +3,24 @@
 struct graphRep {
     int nV;       // #vertices
     int nE;       // #edges
-    int **matrix;  // array of Vertex lists
+    Vertex edges[100];  // array of Vertex lists
 };
 
 
 // (e.v < e.w)
 Edge *edges(Graph g, int *nE) {
   int i = 0;
-  int j = 0;
-  int coun t= 0;
-  while(i<g->nv) {
-    j=0;
-    while(j<g->nv) {
-      if(g->matrix[i][j]) {
-        count++;
-        // add to result array
-      }
-      j++;
+  int j =0;
+  Edge *edges = malloc(sizeof(Edge)*g->nE);
+  for(i=0; i < g->nV; i++) {
+    Vertex curr = graph->edges[i];
+    while (curr != NULL) {
+        edges[j] = curr->edge;
     }
-    i++;
+    curr = curr->next;
   }
-  *nE = count;
-  return result;
+  *nE = j;
+  return edges;
 }
 
 
@@ -52,5 +48,5 @@ int indexOf(Graph g, Vertex v, Vertex w)
       i++;
       k++;
     }
-    return j+w;
+    return j+w-(i+1);
 }
