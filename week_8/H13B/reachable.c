@@ -5,9 +5,36 @@
 
 #define MAX_V 6
 
+Vertex *getNeighbours(Graph g, Vertex v, int *size) {
+  int i = 0;
+  int j = 0;
+  int result = malloc(sizeof(int)*100);
+  for(i=0; i<g->nV; i++) {
+    if(g->matrix[v][i]) {
+      result[j] = i;
+      j++;
+    }
+  }
+  *size = j;
+  return result;
+}
+
 Set reachable(Graph g, Vertex v) {
   Set result = newSet(MAX_V);
-
+  Queue toVisit = newQueue(MAX_V);
+  addToQueue(toVisit,v);
+  while (!empty(toVisit)) {
+    Vertex curr = leaveQueue(toVisit);
+    if (inSet(result, curr))
+      continue;
+    addToSet(result, curr);
+    int size = 0;
+    Vertex *neighbours = getNeighbours(g, curr, &size);
+    int i = 0;
+    for(i=0; i < size; i++) {
+      addToQueue(toVisit, neighbours[i]);
+    }
+  }
   return result;
 }
 

@@ -5,9 +5,22 @@
 
 #define MAX_V 6
 
+
 Set reachable(Graph g, Vertex v) {
   Set result = newSet(MAX_V);
-
+  Queue q = newQueue();
+  enterQueue(q,v);
+  while (!isEmpty(q)) {
+    Vertex curr = leaveQueue(q);
+    if (visited[curr]) continue;
+    visited[curr] = 1;
+    int nE = 0;
+    neighbours = getNeighbours(g,v,&nE);
+    int i = 0;
+    for(i=0; i<nE; i++) {
+      enterQueue(q,edges[i]);
+    }
+  }
   return result;
 }
 

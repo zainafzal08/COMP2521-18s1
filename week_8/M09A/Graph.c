@@ -2,6 +2,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
+int* getNeighbours(Graph g, Vertex v, int* nE) {
+  int *ret = malloc(sizeof(int)*g->nV);
+  int i = 0;
+  int j = 0;
+  for(i=0;i < g->nV; i++) {
+      if(g->edges[v][i]) {
+        ret[j] = i;
+        j++
+      }
+  }
+  *nE = j;
+  return ret;
+}
+
 Graph newGraph(int max){
   Graph g = malloc(sizeof(struct graphRep));
   g->nV = max;
