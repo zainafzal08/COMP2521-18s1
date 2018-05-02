@@ -12,20 +12,7 @@ struct graphRep {
 };
 
 void getEdges(Graph g, Edge* result){
-  int i = 0;
-  int j = 0;
-  int ei = 0;
-  for(i=0; i < g->nV; i++) {
-    for(j=0; j < g->nV; j++) {
-      if (i <= j) continue;
-      if(g->edges[i][j] > 0) {
-        result[ei].v = i;
-        result[ei].w = g->edges[i][j];
-        result[ei].t = j;
-        ei++;
-      }
-    }
-  }
+
 }
 
 Graph newGraph(int max){

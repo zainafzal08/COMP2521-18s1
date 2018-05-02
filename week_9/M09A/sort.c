@@ -3,10 +3,19 @@
 #include "Graph.h"
 
 void sortedEdgeList(Graph g, Edge edges[]) {
-  // write dis
   getEdges(g,edges);
   int nE = numEdges(g);
-
+  int i = 1;
+  int j = 0;
+  for(i=1; i < nE; i++) {
+    for(j=0; j < nE-i; j++) {
+      if(edges[j].w > edges[j+1].w) {
+        Edge tmp = edges[j];
+        edges[j] = edges[j+1];
+        edges[j+1] = tmp;
+      }
+    }
+  }
 }
 
 int main(int argc, char* argv[]) {
