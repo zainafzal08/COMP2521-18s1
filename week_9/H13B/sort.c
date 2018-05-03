@@ -6,7 +6,16 @@ void sortedEdgeList(Graph g, Edge edges[]) {
   // write dis
   getEdges(g,edges);
   int nE = numEdges(g);
-
+  int i = 0;
+  for(i=1; i<nE; i++) {
+    for(j=0; j<nE-i; j++) {
+      if(edges[j].w > edges[j+1].w) {
+        Edge temp = edges[j];
+        edges[j] = edges[j+1];
+        edges[j+1] = temp;
+      }
+    }
+  }
 }
 
 int main(int argc, char* argv[]) {
