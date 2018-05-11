@@ -1,0 +1,2 @@
+python3 MarkdownRenderer.py faq.md index.html
+open index.html

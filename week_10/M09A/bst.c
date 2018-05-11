@@ -20,7 +20,7 @@ Link newNode(int v) {
 
 
 int BSTWidth(BSTree t) {
-  return 0;
+  return !t ? 0: BSTWidth(t->left)+3+BSTWidth(t->right);
 }
 
 
