@@ -95,7 +95,11 @@
 <li><a href='#2'> <strong>How do i modify Dijkstra to keep track of multiple paths!</strong></a></li>
 <li><a href='#queue'> <strong>How do i build a linked list for my PQ without editing PQ.h?</strong></a></li>
 <li><a href='#3'> <strong>I started this assignment way too late! Help!</strong></a></li>
-<li><a href='#4'> <strong>What on earth is this math, i&#39;m not a math person</strong></a></li>
+<li><a href='#4'> <strong>What if in the closeness calculation we find isolated nodes?</strong></a></li>
+<li><a href='#5'> <strong>Are any of the test cases interesting?</strong></a></li>
+<li><a href='#6'> <strong>How do i use the testing interface</strong></a></li>
+<li><a href='#7'> <strong>How do i use the graphVis interface</strong></a></li>
+<li><a href='#10'> <strong>What on earth is this math, i&#39;m not a math person</strong></a></li>
 </sol><br><hr><h3 id=0> <strong>Should the return value of outIncident() and inIncident() be a copy of the AdjList stored in the graph, or a direct pointer to the list in the graph representation?</strong></h3>
 
 <p>Both have their advantages and disadvantages but because our program will be calling this function once every single node in a graph multiple times, going with the faster option would be a good idea.
@@ -117,7 +121,7 @@ Obviously this would be to return a direct pointer. Since no function ever needs
 
 <h3 id=queue> <strong>How do i build a linked list for my PQ without editing PQ.h?</strong></h3>
 
-<p>Implementation specific details of priority queue (PQRep) should not be in PQ.h, it should be in PQ.c. For example, if one implements PQRep using an array, we do not need any pointers!; for a linked list we need prev/next; and for say a tree as per tree ADT. So in PQ.c, depending on the implementation we define PQRep. </p>
+<p>Implementation specific details of priority queue (PQRep) should not be in PQ.h, it should be in PQ.c. For example, if one implements PQRep using an array, we do not need any pointers!; for a linked list we need prev/next; and for say a tree as per tree ADT. So in PQ.c, depending on the implementation we define PQRep.</p>
 
 <p>You can build a linked list which stores ItemPQ and manipulate that within PQ.c</p>
 
@@ -135,7 +139,72 @@ Obviously this would be to return a direct pointer. Since no function ever needs
 
 <p>As you are going through, test often! write your own tests! you want to make sure you get as many marks as you could have gotten for the previous section before moving on so you can submit at the last minute having the most correct code you can. Trust me, do not leave debugging to the last minute, write a bit of code, test it, fix it. Use the test files to write direct function tests in the main function.</p>
 
-<h3 id=4> <strong>What on earth is this math, i&#39;m not a math person</strong></h3>
+<h3 id=4> <strong>What if in the closeness calculation we find isolated nodes?</strong></h3>
+
+<p>The closeness of a node that is connected to no other nodes is 0</p>
+
+<p>As for how to calculate the closeness of all other nodes you can just ignore any node you can&#39;t reach for the calculation but then scale your value depending on how many nodes you <em>can</em> reach.</p>
+
+<p>See the snippet below from someone smarter then me</p>
+
+<p><img style="width: 60%" src="B.png"></a></p>
+
+<h3 id=5> <strong>Are any of the test cases interesting?</strong></h3>
+
+<p>Actually test input 6 is a graph of the relationships between characters in the play Les miserables.</p>
+
+<p>http://visjs.org/examples/network/exampleApplications/lesMiserables.html</p>
+
+<p>I wanted to put in labels so you could see names but that would mean making the graph adt more complicated and thought i&#39;d spare you the pain.</p>
+
+<h3 id=6> <strong>How do i use the testing interface</strong></h3>
+
+<p>If you just run ./testCentralityMeasure you will get a help message on how to use the test interface.</p>
+
+<p>For example with testCentralityMeasure you get</p>
+
+<pre><code>Usage: ./testCentralityMeasures <file> <flag>
+Valid Flags:
+    d    : degree centrality
+    do   : degree out centrality
+    di   : degree in centrality
+    c    : closeness centrality
+    b    : betweenness centrality
+    bn   : betweenness centrality normalised
+    v<m> : View graph with mode <m>
+Valid Modes:
+    0    : DEFAULT
+    1    : DEGREE_IN
+    2    : DEGREE_OUT
+    3    : DEGREE
+    4    : CLOSENESS
+    5    : BETWEENNESS</code></pre>
+
+<p>So if you wanted to see the output for your degree_in function for the 2nd test graph you would run
+<code>./testCentralityMeasures graphs/2.in di</code></p>
+
+<div class='alert alert-dismissible alert-warning'>Note that the modes are how the graphVis interface will colour nodes, with default all nodes will be the same shade of red whereas if you use the flag <code>v3</code> the nodes colour will be brighter if it has a higher degree centrality and more grey if it has a lower centrality.</div>
+
+<h3 id=7> <strong>How do i use the graphVis interface</strong></h3>
+
+<p>Whenever you want to draw up the graph just call the function &quot;graphVis&quot; as such</p>
+
+<p><code>graphVis(g, DEFAULT);</code></p>
+
+<p>You can change the mode to be any of the below to change how the system colors nodes. If you choose Degree for example, nodes with higher degree centralities will be coloured more red.</p>
+
+<pre><code>DEFAULT
+DEGREE_IN
+DEGREE_OUT
+DEGREE
+CLOSENESS
+BETWEENNESS</code></pre>
+
+<p>Once the function is called a link is printed to the terminal, paste that into a web browser (chrome works best) to see the graph and play around with it.</p>
+
+<div class='alert alert-dismissible alert-danger'> Note that everytime you call the function the previous draw is overriden so if you want to draw the graph multiple times in 1 run you have to use GDB and set breakpoints after each draw so you can see the graph before overriding it</div>
+
+<h3 id=10> <strong>What on earth is this math, i&#39;m not a math person</strong></h3>
 
 <blockquote class='blockquote' style='text-align: center'><p class='mb-0'>Math, more like no </p><footer class='blockquote-footer'><cite> Zain</cite></footer></blockquote>
 
