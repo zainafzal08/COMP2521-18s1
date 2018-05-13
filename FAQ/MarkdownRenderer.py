@@ -22,6 +22,7 @@ class HighlighterRenderer(m.HtmlRenderer):
 class MarkdownRenderer():
     def __init__(self):
         self.mdRenderer = m.Markdown(HighlighterRenderer(), extensions=('fenced-code','tables'))
+        self.headings = []
 
     def manualReplace(self, s, r, t):
         l = len(s)
@@ -30,10 +31,22 @@ class MarkdownRenderer():
                 t = t[0:i] + r + t[i+l:]
         return t
 
+    def getTOC(self):
+        toc = ["<h2>Table Of Contents</h2>"]
+        toc.append("<ol>")
+        for heading in self.headings:
+            toc.append("<li><a href='#%s'>%s</a></li>"%heading)
+        toc.append("</sol><br><hr>")
+        return "\n".join(toc)
+
     def postRender(self, t, plus):
         t = re.sub('<table>','<table class="table" style="width: 50%;margin-left: 25%;">',t)
+        toc = self.getTOC()
+        t = toc + t
         return t
+
     def render(self, text, **kargs):
+        self.headings = []
         if "plus" not in kargs:
             plus = False
         else:
@@ -41,9 +54,14 @@ class MarkdownRenderer():
         pre = self.renderPlus(self.mdRenderer(text)) if plus else self.mdRenderer(text)
         return self.postRender(pre,plus)
 
-    def subrender(self,r,t,temp):
+    def subrender(self,r,t,temp,**kargs):
+        type = None
+        if "type" in kargs:
+            type = kargs["type"]
         s = r.search(t)
         while s:
+            if type == "heading":
+                self.headings.append(s.groups())
             rTemp= temp%s.groups()
             t = self.manualReplace(s.group(0),rTemp,t)
             s = r.search(t)
@@ -52,6 +70,8 @@ class MarkdownRenderer():
     def renderPlus(self, text):
         text = self.subrender(re.compile('<p>\![^\!](.*?)</p>'),text,"<div class='alert alert-dismissible alert-warning'>%s</div>")
         text = self.subrender(re.compile('<p>\!\!(.*?)</p>'),text,"<div class='alert alert-dismissible alert-danger'>%s</div>")
+        for i in range(1,7):
+            text = self.subrender(re.compile('<h%d>\s*\!([\w\_]+)(.*?)</h%d>'%(i,i),flags=re.M),text,'<h'+str(i)+' id=%s>%s</h'+str(i)+'>',type="heading")
         # block quote magic
         c = re.compile('<blockquote>[\n\s]*<p>[\n\s]*(.*)!-(.*)[\n\s]*</p>[\n\s]*</blockquote>',flags=re.M)
         quote = "<blockquote class='blockquote' style='text-align: center'><p class='mb-0'>%s</p><footer class='blockquote-footer'><cite>%s</cite></footer></blockquote>"
@@ -69,8 +89,11 @@ if __name__ == "__main__":
     <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css" media="screen">
     <style>
         h1 {text-align: center;}
+        h2,h3,h4,h5,h6 {
+            margin-bottom: 1.5em;
+        }
         hr {margin-bottom: 5%};
-    </style>   
+    </style>
     <style>
 /* syntax highlighting css taken from  https://github.com/richleland/pygments-css/blob/master/manni.css */
 .highlight {
@@ -159,4 +182,3 @@ if __name__ == "__main__":
     f.write(r)
     f.write(footer)
     f.close()
-

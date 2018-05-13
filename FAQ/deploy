@@ -1,2 +1,3 @@
 python3 MarkdownRenderer.py faq.md index.html
 scp index.html z5059449@cse.unsw.edu.au:~/public_html/cs2521/faq/index.html
+scp *.png z5059449@cse.unsw.edu.au:~/public_html/cs2521/faq/

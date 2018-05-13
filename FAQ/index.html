@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css" media="screen">
     <style>
         h1 {text-align: center;}
+        h2,h3,h4,h5,h6 {
+            margin-bottom: 1.5em;
+        }
         hr {margin-bottom: 5%};
-    </style>   
+    </style>
     <style>
 /* syntax highlighting css taken from  https://github.com/richleland/pygments-css/blob/master/manni.css */
 .highlight {
@@ -85,9 +88,323 @@
 .highlight .il { color: #3BCEBF } /* Literal.Number.Integer.Long */
     </style>
 </head><body style="margin: 5%"> <h1> Comp 2521 - Ass 2 FAQ </h1><hr> <div style="margin: 5%">
-    <h3><strong>Im having trouble</strong></h3>
+    <h2>Table Of Contents</h2>
+<ol>
+<li><a href='#0'> <strong>Should the return value of outIncident() and inIncident() be a copy of the AdjList stored in the graph, or a direct pointer to the list in the graph representation?</strong></a></li>
+<li><a href='#1'> <strong>Can Edge weights be 0 or less?</strong></a></li>
+<li><a href='#2'> <strong>How do i modify Dijkstra to keep track of multiple paths!</strong></a></li>
+<li><a href='#queue'> <strong>How do i build a linked list for my PQ without editing PQ.h?</strong></a></li>
+<li><a href='#3'> <strong>I started this assignment way too late! Help!</strong></a></li>
+<li><a href='#4'> <strong>What on earth is this math, i&#39;m not a math person</strong></a></li>
+</sol><br><hr><h3 id=0> <strong>Should the return value of outIncident() and inIncident() be a copy of the AdjList stored in the graph, or a direct pointer to the list in the graph representation?</strong></h3>
 
-<p>Look i get it, it&#39;s a hard assignment, but in the wise words of a great man</p>
+<p>Both have their advantages and disadvantages but because our program will be calling this function once every single node in a graph multiple times, going with the faster option would be a good idea.
+Obviously this would be to return a direct pointer. Since no function ever needs to edit the graph, only read from it, this would work fine.</p>
 
-<blockquote class='blockquote' style='text-align: center'><p class='mb-0'>get gud </p><footer class='blockquote-footer'><cite> Sean</cite></footer></blockquote>
+<p>On the same vain think about how you could optimise inIncident.</p>
+
+<blockquote class='blockquote' style='text-align: center'><p class='mb-0'>gotta go fast </p><footer class='blockquote-footer'><cite> Sanic</cite></footer></blockquote>
+
+<h3 id=1> <strong>Can Edge weights be 0 or less?</strong></h3>
+
+<div class='alert alert-dismissible alert-danger'> We will never give you a graph with edge weights of 0 or less.</div>
+
+<h3 id=2> <strong>How do i modify Dijkstra to keep track of multiple paths!</strong></h3>
+
+<div class='alert alert-dismissible alert-warning'>somebody didn&#39;t go to lectures lmao</div>
+
+<p>Look at the lecture where ashesh went through how to do a dijkstra with a pred array of linked lists. But the basic concept is you can keep track of multiple preds if you carefully think about the cases when you want to add to the list.</p>
+
+<h3 id=queue> <strong>How do i build a linked list for my PQ without editing PQ.h?</strong></h3>
+
+<p>Implementation specific details of priority queue (PQRep) should not be in PQ.h, it should be in PQ.c. For example, if one implements PQRep using an array, we do not need any pointers!; for a linked list we need prev/next; and for say a tree as per tree ADT. So in PQ.c, depending on the implementation we define PQRep. </p>
+
+<p>You can build a linked list which stores ItemPQ and manipulate that within PQ.c</p>
+
+<div class='alert alert-dismissible alert-warning'>As long as you can return the right ItemPQ you can store it in whatever data structure you want</div>
+
+<h3 id=3> <strong>I started this assignment way too late! Help!</strong></h3>
+
+<div class='alert alert-dismissible alert-danger'> We have no mercy</div>
+
+<p>Ok but if you are starting this super late, it&#39;s a pretty linear assignment. Start by building up the graph representation, then the PQ and then the search to start getting some of the basic marks.</p>
+
+<p>Then progress to the easier centrality measures such as degree and then closeness.</p>
+
+<p>After that if you have time you can tackle the harder final bits of the assignment.</p>
+
+<p>As you are going through, test often! write your own tests! you want to make sure you get as many marks as you could have gotten for the previous section before moving on so you can submit at the last minute having the most correct code you can. Trust me, do not leave debugging to the last minute, write a bit of code, test it, fix it. Use the test files to write direct function tests in the main function.</p>
+
+<h3 id=4> <strong>What on earth is this math, i&#39;m not a math person</strong></h3>
+
+<blockquote class='blockquote' style='text-align: center'><p class='mb-0'>Math, more like no </p><footer class='blockquote-footer'><cite> Zain</cite></footer></blockquote>
+
+<p>Yeah that&#39;s fair, it was confusing to me too, so lets break down each centrality.</p>
+
+<p><strong>Degree</strong></p>
+
+<p>This is just a sum of the number of edges connected to a certain node. If a node has 3 outgoing edges and 1 ingoing edge it has a in degree of 1, a out degree of 3 and a degree of 4 (degree is a sum of out and in)</p>
+
+<p><strong>Closeness</strong></p>
+
+<p>This is the sum of the shortests paths from one node to every other node. Consider the example below.</p>
+
+<p><img style="width: 60%" src="A.png"></p>
+
+<p>We need to know the shortest distance from each node to every other node,
+so for the sake of going through this on paper lets make a table (this doesn&#39;t mean your code has to use a 2D matrix, i&#39;m just going through the algorithm)</p>
+
+<p>Note that i don&#39;t care about the distance from a node to itself (since that&#39;s meaningless, it&#39;s like saying how far is my house while in your house)</p>
+
+<p><img style="width: 60%" src="https://frinkiac.com/video/S08E22/8omUnepDf7tQcvRAzdadhUeTXcY=.gif"></p>
+
+<p>anyway the table looks like this</p>
+
+<table class="table" style="width: 50%;margin-left: 25%;">
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>X</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td></td>
+<td></td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+
+<p>So we know that the shortest way to get to 2 from 0 is to just relax the edge from 0 to 2 with weight 1</p>
+
+<p>Hence the distance of 2 from 0 is 1</p>
+
+<table class="table" style="width: 50%;margin-left: 25%;">
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>X</td>
+<td></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td></td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td></td>
+<td></td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+
+<p>We repeat this with all other nodes to get</p>
+
+<table class="table" style="width: 50%;margin-left: 25%;">
+<thead>
+<tr>
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>X</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>2</td>
+<td>X</td>
+<td>3</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>3</td>
+<td>1</td>
+<td>X</td>
+</tr>
+</tbody>
+</table>
+
+<p>Now we sum up, the closeness of node 0 is 2+1 = 3
+for node 1 it&#39;s 2 + 3 = 5
+and for node 2 it&#39;s 3+1 = 4</p>
+
+<p>Finally we normalise, by taking each of these sums and dividing under nV-1</p>
+
+<p>for us we have 3 nodes so Nv-1 is 2</p>
+
+<p>so our values become</p>
+
+<table class="table" style="width: 50%;margin-left: 25%;">
+<thead>
+<tr>
+<th></th>
+<th>closeness centrality</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>2/3 = 0.666667 (rounded)</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>2/5 = 0.4</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>2/4 = 0.5</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Betweenness</strong></p>
+
+<p>Betweenness is a measure of how important a node is in a graph, i.e if we took it away how many nodes would become disconnected.</p>
+
+<p>We can measure this by counting how many shortest paths pass through a certain node.</p>
+
+<p>In the same graph from above we can build a table if every pair and the shortest paths between the two (if there are two or more paths with the same distance, all minimal, we take them all)</p>
+
+<table class="table" style="width: 50%;margin-left: 25%;">
+<thead>
+<tr>
+<th>pair</th>
+<th>paths</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>0 - 0</td>
+<td>[0]</td>
+</tr>
+<tr>
+<td>0 - 1</td>
+<td>[0, 1],[0, 2, 1]</td>
+</tr>
+<tr>
+<td>0 - 2</td>
+<td>[0, 2]</td>
+</tr>
+<tr>
+<td>1 - 0</td>
+<td>[1, 0]</td>
+</tr>
+<tr>
+<td>1 - 1</td>
+<td>[1]</td>
+</tr>
+<tr>
+<td>1 - 2</td>
+<td>[1, 0, 2]</td>
+</tr>
+<tr>
+<td>2 - 0</td>
+<td>[2, 1, 0]</td>
+</tr>
+<tr>
+<td>2 - 1</td>
+<td>[2, 1]</td>
+</tr>
+<tr>
+<td>2 - 2</td>
+<td>[2]</td>
+</tr>
+</tbody>
+</table>
+
+<p>now ignore the start and end nodes and count how many times each node appears. i.e if we have [0,1,2] we don&#39;t add 1 to the counts of 0 or 2, just 1 because 1 is the only node that is &quot;between&quot;</p>
+
+<table class="table" style="width: 50%;margin-left: 25%;">
+<thead>
+<tr>
+<th></th>
+<th>Appearences</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>Now we have to do a extra step. If we count a node that appears in 1 of many shortest paths, such as the 2 in the path from 0 to 1. We have to scale it&#39;s value down. Since it&#39;s only 1 of many shortests paths the node isn&#39;t that important cause if we killed it the other shortest paths would still exist.  </p>
+
+<p>So for each pair we take the number of times a certain node appears in the path and divide by the total number of paths.</p>
+
+<p>so for the case of 2 we get 1/2. there are 2 shortests paths and 2 appears in 1 of them.</p>
+
+<table class="table" style="width: 50%;margin-left: 25%;">
+<thead>
+<tr>
+<th></th>
+<th>Appearences</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>0.5</td>
+</tr>
+</tbody>
+</table>
 </div></body>

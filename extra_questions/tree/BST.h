@@ -1,15 +1,16 @@
 typedef struct _BSTNode *Link;
-typedef struct _BSTree *BSTree;
+typedef struct _BST *BST;
 
-typedef struct _BSTNode {
+struct _BSTNode {
    int  value;
    Link left, right;
-} BSTNode;
+};
 
-typedef struct _BSTree {
+struct _BST {
    Link root;
-} BSTNode;
+};
 
-BSTree newBST();
-int BSTWidth(BSTree t);
-void printTree(BSTree t);
+BST newBST();
+void addBST(BST t, int v);
+int BSTWidth(BST t);
+void printTree(BST t);

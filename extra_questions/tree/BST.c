@@ -1,9 +1,10 @@
 #include "BST.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-
-BSTree newBST() {
-  Link n = malloc(sizeof(struct _BSTree));
-  n->root = NULL
+BST newBST() {
+  BST n = malloc(sizeof(struct _BST));
+  n->root = NULL;
   return n;
 }
 
@@ -16,13 +17,13 @@ Link newNode(int v) {
 }
 
 void appendNode(Link l, int v) {
-  if(v >= l->value && l->right == NULL) l->right = newNode(v);
-  if(v < l->value && l->left == NULL) l->left = newNode(v);
-  if(v >= l->value) appendNode(l->right);
-  if(v < l->value) appendNode(l->left);
+  if (v >= l->value && l->right == NULL) l->right = newNode(v);
+  else if (v < l->value && l->left == NULL) l->left = newNode(v);
+  else if (v >= l->value) appendNode(l->right,v);
+  else if (v < l->value) appendNode(l->left,v);
 }
 
-void addBST(BSTree t, int v) {
+void addBST(BST t, int v) {
   if(!t->root) t->root = newNode(v);
   else appendNode(t->root,v);
 }
@@ -35,11 +36,11 @@ int digits(int n){
   }
   return count;
 }
-
-int BSTWidth(BSTree t) {
-  Link n = t->root;
-  int nodeWidth = 2+digits(n->value);
-  return !t ? 0: BSTWidth(n->left)+(nodeWidth)+BSTWidth(n->right);
+int recBSTWidth(Link n){
+  return !n ? 0: recBSTWidth(n->left)+(2+digits(n->value))+recBSTWidth(n->right);
+}
+int BSTWidth(BST t) {
+  return recBSTWidth(t->root);
 }
 
 // adds a node to a tree in the right place
@@ -48,6 +49,6 @@ int BSTWidth(BSTree t) {
 //      [5]
 //     /   \
 //   [1]   [2]
-void printTree(BSTree t) {
-
+void printTree(BST t) {
+  while()
 }
