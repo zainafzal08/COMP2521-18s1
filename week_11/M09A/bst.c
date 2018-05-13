@@ -66,13 +66,45 @@ BSTree BSTreeDelete(BSTree t, int v)
 }
 
 // TODO: do dis x 2
-BSTree BSTreeInsert(BSTree t, int v) {
+// pls do not call on null thank
+int max(BSTree t){
+  if(t == NULL) abort();
+  if(t->right != NULL) return max(t->right);
+  else return t->value;
+}
 
+int min(BSTree t){
+  if(t == NULL) abort();
+  if(t->left != NULL) return min(t->left);
+  else return t->value;
+}
+
+BSTree BSTreeInsert(BSTree t, int v) {
+    // simp;e base
+    if(t == NULL){
+      return newNode(v);
+    }
+    // already exists but deleted
+    if(t->value == v && t->deleted) {
+      t->deleted = FALSE;
+      return t;
+    }
+    if(v > max(t->left) && v < min(t->right) && t->deleted) {
+      t->value = v;
+      t->deleted = FALSE;
+    }
+    // recurrse case
+    if(v < t->value) t->left = BSTreeInsert(t->left,v);
+    if(v >= t->value) t->right = BSTreeInsert(t->right,v);
+    return t;
 }
 
 void showBSTreeInfix(BSTree t)
 {
-
+  if(t == NULL) return;
+  showBSTreeInfix(t->left);
+  printf("%d ",t->value);
+  showBSTreeInfix(t->right);
 }
 
 int main(int argc, char* argv[]) {
